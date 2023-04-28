@@ -1,0 +1,41 @@
+.content {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f5f5f5;
+}
+
+.flower {
+	background-color: #f5f5f5;
+	width: 50vmin;
+	height: 50vmin;
+	position: relative;
+}
+
+.butterfly {
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	animation: wheel 4.5s infinite cubic-bezier(0.35, 0, 0.6, 1);
+	border: 2px solid #f5f5f5;
+
+	@for $i from 1 through 17 {
+		&:nth-child(#{$i}) {
+			background: linear-gradient(to top, #f5f5f5 45%, hsl(($i / 17) * 360deg, 70%, 50%) 65%);
+			$ratio: (18 - $i) / 18;
+			width: 100% * $ratio;
+			height: 100% * $ratio;
+			$rotation: (9 - $i) * 360deg;
+			transform: translate(-50%, -50%) rotate($rotation);
+		}
+	}
+}
+
+@keyframes wheel {
+	to {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+}

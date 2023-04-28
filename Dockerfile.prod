@@ -1,0 +1,21 @@
+   
+FROM node:18-alpine AS builder
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json ./
+RUN npm install
+COPY . .
+# CMD ["npm", "run", "dev"]
+# EXPOSE 5173
+RUN npm run build
+
+
+
+FROM nginx:1.19.0
+WORKDIR /usr/share/nginx/html
+RUN rm -rf ./*
+COPY --from=builder /app/build .
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+# docker run -dp 3000:3000 -w /app --mount type=bind,src="$(pwd)",target=/app node:18-alpine  sh -c "yarn install && yarn run dev"
+# docker run -d --network todo-app --network-alias mysql  -v todo-mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=todos mysql:8.0

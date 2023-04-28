@@ -1,0 +1,13 @@
+services:
+  frontend:
+    container_name: ai_content_generator
+    image: ai_content_generator_image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3333:5173
+    
